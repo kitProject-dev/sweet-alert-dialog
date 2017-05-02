@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -19,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -70,6 +70,17 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
     private RecyclerView mListView;
     private OnListSweetClickListener mListClickListener;
     private int mListTextSize = 15;
+    private LinearLayout mButtonLayout;
+    private LinearLayout mButtonReviewLayout;
+    private Button mReviewConfirmButton;
+    private String mReviewConfirmText;
+    private OnSweetClickListener mReviewConfirmClickListener;
+    private Button mReviewCancelButton;
+    private String mReviewCancelText;
+    private OnSweetClickListener mReviewCancelClickListener;
+    private Button mReviewOtherButton;
+    private String mReviewOtherText;
+    private OnSweetClickListener mReviewOtherClickListener;
 
     public static final int NORMAL_TYPE = 0;
     public static final int ERROR_TYPE = 1;
@@ -79,6 +90,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
     public static final int PROGRESS_TYPE = 5;
     public static final int EDIT_TEXT_TYPE = 6;
     public static final int LIST_TYPE = 7;
+    public static final int REVIEW_TYPE = 8;
 
     public static interface OnSweetClickListener {
         public void onClick (SweetAlertDialog sweetAlertDialog);
@@ -187,12 +199,24 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
         mEditTextConfirmButton.setOnClickListener(this);
         mListViewFrame = (FrameLayout)findViewById(R.id.list_view_frame);
         mListView = (RecyclerView)findViewById(R.id.listView);
+        mButtonLayout = (LinearLayout)findViewById(R.id.button_layout);
+        mButtonReviewLayout = (LinearLayout)findViewById(R.id.button_review_layout);
+        mReviewConfirmButton = (Button)findViewById(R.id.review_confirm_button);
+        mReviewConfirmButton.setOnClickListener(this);
+        mReviewCancelButton = (Button)findViewById(R.id.review_cancel_button);
+        mReviewCancelButton.setOnClickListener(this);
+        mReviewOtherButton = (Button)findViewById(R.id.review_other_button);
+        mReviewOtherButton.setOnClickListener(this);
+
         setTitleText(mTitleText);
         setContentText(mContentText);
         setCancelText(mCancelText);
         setConfirmText(mConfirmText);
         setList(mList);
         changeAlertType(mAlertType, true);
+        setReviewConfirmText(mReviewConfirmText);
+        setReviewCancelText(mReviewCancelText);
+        setReviewOtherText(mReviewOtherText);
 
     }
 
@@ -206,6 +230,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
         mEditTextFrame.setVisibility(View.GONE);
         mEditTextConfirmButton.setVisibility(View.GONE);
         mListViewFrame.setVisibility(View.GONE);
+        mButtonLayout.setVisibility(View.VISIBLE);
+        mButtonReviewLayout.setVisibility(View.GONE);
 
         mConfirmButton.setBackgroundResource(R.drawable.blue_button_background);
         mErrorFrame.clearAnimation();
@@ -267,6 +293,13 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
                     mTitleTextView.setVisibility(View.GONE);
                     mListViewFrame.setVisibility(View.VISIBLE);
                     mConfirmButton.setVisibility(View.GONE);
+                    break;
+                case REVIEW_TYPE:
+                    mTitleTextView.setVisibility(View.GONE);
+                    mSuccessLeftMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(0));
+                    mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
+                    mButtonLayout.setVisibility(View.GONE);
+                    mButtonReviewLayout.setVisibility(View.VISIBLE);
                     break;
             }
             if (!fromCreate) {
@@ -374,6 +407,30 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
         return this;
     }
 
+    public SweetAlertDialog setReviewConfirmText (String text) {
+        mReviewConfirmText = text;
+        if (mReviewConfirmButton != null && mReviewConfirmText != null) {
+            mReviewConfirmButton.setText(mReviewConfirmText);
+        }
+        return this;
+    }
+
+    public SweetAlertDialog setReviewCancelText (String text) {
+        mReviewCancelText = text;
+        if (mReviewCancelButton!= null && mReviewCancelText != null) {
+            mReviewCancelButton.setText(mReviewCancelText);
+        }
+        return this;
+    }
+
+    public SweetAlertDialog setReviewOtherText (String text) {
+        mReviewOtherText = text;
+        if (mReviewOtherButton != null && mReviewOtherText != null) {
+            mReviewOtherButton.setText(mReviewOtherText);
+        }
+        return this;
+    }
+
     public SweetAlertDialog setList (final ArrayList<String> list) {
         mList = list;
         if (mListView != null && mList != null) {
@@ -410,6 +467,22 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
 
     public SweetAlertDialog setListClickListener (OnListSweetClickListener listener) {
         mListClickListener = listener;
+        return this;
+    }
+
+
+    public SweetAlertDialog setReviewConfirmClickListener (OnSweetClickListener listener) {
+        mReviewConfirmClickListener = listener;
+        return this;
+    }
+
+    public SweetAlertDialog setReviewCancelClickListener (OnSweetClickListener listener) {
+        mReviewCancelClickListener = listener;
+        return this;
+    }
+
+    public SweetAlertDialog setReviewOtherClickListener (OnSweetClickListener listener) {
+        mReviewOtherClickListener = listener;
         return this;
     }
 
@@ -457,6 +530,24 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
         } else if (v.getId() == R.id.edit_text_confirm_button) {
             if (mEditTextConfirmClickListener != null) {
                 mEditTextConfirmClickListener.onClick(SweetAlertDialog.this, mEditText.getText().toString());
+            } else {
+                dismissWithAnimation();
+            }
+        } else if (v.getId() == R.id.review_confirm_button) {
+            if (mReviewConfirmClickListener != null) {
+                mReviewConfirmClickListener.onClick(SweetAlertDialog.this);
+            } else {
+                dismissWithAnimation();
+            }
+        } else if (v.getId() == R.id.review_cancel_button) {
+            if (mReviewCancelClickListener != null) {
+                mReviewCancelClickListener.onClick(SweetAlertDialog.this);
+            } else {
+                dismissWithAnimation();
+            }
+        } else if (v.getId() == R.id.review_other_button) {
+            if (mReviewOtherClickListener != null) {
+                mReviewOtherClickListener.onClick(SweetAlertDialog.this);
             } else {
                 dismissWithAnimation();
             }

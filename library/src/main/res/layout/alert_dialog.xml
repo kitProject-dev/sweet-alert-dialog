@@ -166,6 +166,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -189,5 +190,38 @@
             android:id="@+id/confirm_button"
             style="@style/dialog_blue_button"
             android:text="@string/dialog_ok" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_review_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/review_confirm_button"
+            style="@style/dialog_blue_button"
+            android:layout_marginBottom="10dp"
+            android:text="@string/dialog_ok"
+            android:layout_width="match_parent" />
+
+        <Button
+            android:id="@+id/review_cancel_button"
+            style="@style/dialog_blue_button"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gray_button_background"
+            android:text="@string/dialog_cancel"
+            android:layout_width="match_parent" />
+
+        <Button
+            android:id="@+id/review_other_button"
+            style="@style/dialog_blue_button"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gray_button_background"
+            android:text="@string/dialog_other"
+            android:layout_width="match_parent"/>
     </LinearLayout>
 </LinearLayout>
