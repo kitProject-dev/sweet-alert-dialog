@@ -11,4 +11,8 @@
         <attr name="pivotX" format="fraction"/>
         <attr name="pivotY" format="fraction" />
     </declare-styleable>
+    <attr name="dialog_text_view" format="reference" />
+    <attr name="card_view" format="reference" />
+    <attr name="success_view" format="reference" />
+    <attr name="dialog_blue_button" format="reference" />
 </resources>

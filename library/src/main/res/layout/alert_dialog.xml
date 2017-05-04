@@ -58,7 +58,7 @@
             android:layout_height="80dp"
             android:layout_marginTop="-13dp"
             android:layout_gravity="right"
-            android:background="@android:color/white" />
+            style="?success_view" />
 
         <View
             android:id="@+id/mask_left"
@@ -66,7 +66,7 @@
             android:layout_height="60dp"
             android:layout_marginLeft="-3dp"
             android:layout_gravity="left"
-            android:background="@android:color/white" />
+            style="?success_view" />
 
         <View
             android:layout_width="match_parent"
@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="19sp"
-        android:textColor="#575757"
+        style="?dialog_text_view"
         android:layout_marginTop="10dp"
         android:text="@string/dialog_default_title" />
 
@@ -134,13 +134,13 @@
         android:textSize="14sp"
         android:textAlignment="center"
         android:gravity="center"
-        android:textColor="#797979"
+        style="?dialog_text_view"
         android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/edit_text_frame"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:visibility="gone">
 
@@ -148,7 +148,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
-            android:inputType="" />
+            android:inputType=""
+            style="?dialog_text_view"
+            android:background="@drawable/edit_text_frame" />
     </FrameLayout>
 
     <FrameLayout
@@ -170,10 +172,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-
         <Button
             android:id="@+id/cancel_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:background="@drawable/gray_button_background"
             android:layout_marginRight="10dp"
             android:visibility="gone"
@@ -181,13 +182,13 @@
 
         <Button
             android:id="@+id/edit_text_confirm_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:visibility="gone"
             android:text="@string/dialog_ok"  />
 
         <Button
             android:id="@+id/confirm_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:text="@string/dialog_ok" />
     </LinearLayout>
 
@@ -202,14 +203,14 @@
 
         <Button
             android:id="@+id/review_confirm_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:layout_marginBottom="10dp"
             android:text="@string/dialog_ok"
             android:layout_width="match_parent" />
 
         <Button
             android:id="@+id/review_cancel_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:layout_marginBottom="10dp"
             android:background="@drawable/gray_button_background"
             android:text="@string/dialog_cancel"
@@ -217,7 +218,7 @@
 
         <Button
             android:id="@+id/review_other_button"
-            style="@style/dialog_blue_button"
+            style="?dialog_blue_button"
             android:layout_marginBottom="10dp"
             android:background="@drawable/gray_button_background"
             android:text="@string/dialog_other"

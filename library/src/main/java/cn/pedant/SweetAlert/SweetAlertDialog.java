@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StyleRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -105,11 +106,15 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
     }
 
     public SweetAlertDialog(Context context) {
-        this(context, NORMAL_TYPE);
+        this(context, NORMAL_TYPE, R.style.alert_dialog);
     }
 
     public SweetAlertDialog(Context context, int alertType) {
-        super(context, R.style.alert_dialog);
+        this(context, alertType, R.style.alert_dialog);
+    }
+
+    public SweetAlertDialog(Context context, int alertType, @StyleRes int themeResId) {
+        super(context, themeResId);
         setCancelable(true);
         setCanceledOnTouchOutside(false);
         mProgressHelper = new ProgressHelper(context);
@@ -262,14 +267,17 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener, Li
             switch (mAlertType) {
                 case ERROR_TYPE:
                     mErrorFrame.setVisibility(View.VISIBLE);
+                    mTitleTextView.setVisibility(View.GONE);
                     break;
                 case SUCCESS_TYPE:
                     mSuccessFrame.setVisibility(View.VISIBLE);
                     // initial rotate layout of success mask
+                    mTitleTextView.setVisibility(View.GONE);
                     mSuccessLeftMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(0));
                     mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
                     break;
                 case WARNING_TYPE:
+                    mTitleTextView.setVisibility(View.GONE);
                     mConfirmButton.setBackgroundResource(R.drawable.red_button_background);
                     mWarningFrame.setVisibility(View.VISIBLE);
                     break;
