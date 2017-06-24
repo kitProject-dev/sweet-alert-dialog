@@ -133,6 +133,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textAlignment="center"
+        android:maxLines="10"
         android:gravity="center"
         style="?dialog_text_view"
         android:visibility="gone" />
@@ -166,6 +167,19 @@
             android:layout_height="300dp" />
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/radio_view_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/radioView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/button_layout"
         android:layout_marginTop="10dp"
@@ -190,6 +204,12 @@
             android:id="@+id/confirm_button"
             style="?dialog_blue_button"
             android:text="@string/dialog_ok" />
+
+        <Button
+            android:id="@+id/radio_confirm_button"
+            style="?dialog_blue_button"
+            android:visibility="gone"
+            android:text="@string/dialog_ok"  />
     </LinearLayout>
 
     <LinearLayout
